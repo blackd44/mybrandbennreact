@@ -9,8 +9,7 @@ const BlogCard = ({ blog, ...props }) => {
         if (item && item.current) {
             item.current.addEventListener('dblclick', e => {
                 e.preventDefault()
-                // window.location.assign(`/blogs/view.html?id=${blog._id}`)
-                console.log('new page')
+                window.location.assign(`/blogs/${blog._id}`)
             })
         }
     }, [])
@@ -20,11 +19,11 @@ const BlogCard = ({ blog, ...props }) => {
             <li ref={item}>
                 <img alt="title" src={blog.image} />
                 <div className="body">
-                    <Link>
+                    <Link to={'/blogs/' + blog._id}>
                         <h2>{blog.title}</h2>
                     </Link>
                     <p dangerouslySetInnerHTML={{ __html: blog.content }}></p>
-                    <Link>
+                    <Link to={'/blogs/' + blog._id}>
                         <u className="more">Read More</u>
                     </Link>
                 </div>
