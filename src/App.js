@@ -7,6 +7,7 @@ import Portfolio from './pages/portfolio'
 import Blogs from './pages/blogs/blogs';
 import OneBlog from './pages/blogs/oneblog';
 import Contact from './pages/contact';
+import Login from './pages/sign/login';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path='/blogs' element={<Blogs />}></Route>
           <Route path='/blogs/:id' element={<OneBlog />}></Route>
           <Route path='/contact' element={<Contact />}></Route>
+          <Route path='/login' element={<Login />}></Route>
         </Route>
       </Routes>
     </>
