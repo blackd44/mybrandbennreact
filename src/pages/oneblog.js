@@ -1,8 +1,10 @@
 import axios from "axios";
+import moment from "moment/moment";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 let server = 'http://localhost:4444'
+const default_profile = "https://www.apesa-france.com/wp-content/uploads/2016/07/profil-homme-2-367x367.png"
 
 const OneBlog = (props) => {
 
@@ -11,10 +13,11 @@ const OneBlog = (props) => {
     const [likes, setLikes] = useState([])
     const [comments, setComments] = useState({
         length: 0,
-        value: []
+        values: []
     })
 
     useEffect(() => {
+
         axios
             .get(server + '/api/blogs/' + id)
             .then(res => {
@@ -34,13 +37,18 @@ const OneBlog = (props) => {
                 if (res.status !== 204) {
                     if (res.status === 200) {
                         setComments(prev => res.data)
-                        console.log(comments)
+                        console.log(res.data)
                     }
                     else
                         console.log(res.data)
                 }
             }).catch(e => console.log({ error: e }))
+
     }, [id])
+
+    useEffect(() => {
+        document.title = blog?.title || 'blog'
+    }, [blog])
 
     return (
         <>
@@ -57,7 +65,7 @@ const OneBlog = (props) => {
                                     blog !== null ? blog.title : 'title'
                                 }</h2>
                                 <p className="gray-color">{
-                                    blog !== null ? blog.owner.username : 'username'
+                                    blog !== null ? blog?.owner?.username : 'username'
                                 }</p>
                             </div>
                             <div
@@ -86,13 +94,13 @@ const OneBlog = (props) => {
                                         <span>10</span>
                                     </p>
                                 </div>
-                                <div className="date gray-color">jan 21, 2022</div>
+                                <div className="date gray-color">{moment(blog?.createdAt).format('MMM DD, YYYY')}</div>
                             </div>
                             <div className="comments">
                                 <div>
-                                    <span className="n">Comments</span>
+                                    <span className="n">{comments?.length} Comments</span>
                                 </div>
-                                <form action="" method="post" name="addComment">
+                                {/* <form action="" method="post" name="addComment">
                                     <img className="profile-image" alt="profile" src="/images/elementor-placeholder-image.webp" />
                                     <aside>
                                         <textarea placeholder="add a comment..." required></textarea>
@@ -101,9 +109,31 @@ const OneBlog = (props) => {
                                             <button type="submit">Comment</button>
                                         </div>
                                     </aside>
-                                </form>
+                                </form> */}
                                 <ul>
-
+                                    {
+                                        comments.values.map(comment => (
+                                            <li key={comment._id}>
+                                                <img className="profile-image" src={comment?.owner?.profile || default_profile} alt={comment?.owner?.username} />
+                                                <aside>
+                                                    <div>
+                                                        <a><b>@{comment?.owner?.username}</b></a>
+                                                        <span>{moment(comment?.createdAt).format('DD-MMM')}</span>
+                                                    </div>
+                                                    <div>{`${comment?.message}` || 'undefined'}</div>
+                                                    <div>
+                                                        <p data-info="likes">
+                                                            <svg width=" 22" height="27" viewBox="0 0 22 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M20.2294 11.25C20.2294 10.0013 19.4378 9 18.4703 9H12.9116L13.756 3.85875C13.7735 3.74625 13.7823 3.6225 13.7823 3.49875C13.7823 3.0375 13.6328 2.61 13.3953 2.30625L12.463 1.125L6.67567 8.5275C6.35024 8.94375 6.15674 9.50625 6.15674 10.125V21.375C6.15674 21.9717 6.34208 22.544 6.67197 22.966C7.00186 23.3879 7.44928 23.625 7.91582 23.625H15.8317C16.5617 23.625 17.1862 23.0625 17.45 22.2525L20.1062 14.3212C20.1854 14.0625 20.2294 13.7925 20.2294 13.5V11.25ZM0.879517 23.625H4.39767V10.125H0.879517V23.625Z" fill="#8B8B97"></path>
+                                                            </svg>
+                                                            <b>{comment?.likes?.length || 0}</b>
+                                                        </p>
+                                                        <b>Reply</b>
+                                                    </div>
+                                                </aside>
+                                            </li>
+                                        ))
+                                    }
                                 </ul>
                             </div>
                             {/*
