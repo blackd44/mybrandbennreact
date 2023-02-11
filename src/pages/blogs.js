@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import BlogCard from "../components/blogCard";
 let server = 'http://localhost:4444'
@@ -7,15 +8,17 @@ const Blogs = () => {
     let [blogs, setBlogs] = useState([])
 
     useEffect(() => {
-        fetch(server + '/api/blogs').then(async res => {
-            if (res.status !== 204) {
-                let body = await res.json()
-                if (res.status === 200)
-                    setBlogs(prev => body)
-                else
-                    console.log(body)
-            }
-        })
+        axios
+            .get(server + '/api/blogs')
+            .then(res => {
+                if (res.status !== 204) {
+                    if (res.status === 200)
+                        setBlogs(prev => res.data)
+                    else
+                        console.log(res.data)
+                }
+            })
+            .catch(e => console.log(e))
     }, [])
 
     return (
