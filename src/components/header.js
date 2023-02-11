@@ -12,7 +12,7 @@ const Header = () => {
                     <NavLink to="/">
                         <li>Home</li>
                     </NavLink>
-                    <NavLink to="/portfolio.html">
+                    <NavLink to="/portfolio">
                         <li>Portfolio</li>
                     </NavLink>
                     <NavLink to="/blogs/">
@@ -21,10 +21,10 @@ const Header = () => {
                     <NavLink to="/about">
                         <li>About</li>
                     </NavLink>
-                    <NavLink to="/contact.html">
+                    <NavLink to="/contact">
                         <li>Contact</li>
                     </NavLink>
-                    <NavLink to="/signin.html">
+                    <NavLink to="/signin">
                         <li>Sign in</li>
                     </NavLink>
                 </ul>
