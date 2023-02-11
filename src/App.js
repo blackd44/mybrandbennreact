@@ -4,8 +4,8 @@ import Home from './pages/home.js';
 import Layout from './components/layout';
 import About from './pages/about';
 import Portfolio from './pages/portfolio'
-import Blogs from './pages/blogs';
-import OneBlog from './pages/oneblog';
+import Blogs from './pages/blogs/blogs';
+import OneBlog from './pages/blogs/oneblog';
 
 function App() {
   return (
