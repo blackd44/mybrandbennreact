@@ -12,7 +12,7 @@ const BlogCard = ({ blog, ...props }) => {
                 window.location.assign(`/blogs/${blog._id}`)
             })
         }
-    }, [])
+    }, [blog._id])
 
     return (
         <>
