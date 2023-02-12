@@ -1,30 +1,38 @@
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
+const default_image = process.env.REACT_APP_DEFAULT_IMAGE
+
 const BlogCard = ({ blog, ...props }) => {
 
     const item = useRef()
+    const image = useRef()
 
     useEffect(() => {
         if (item && item.current) {
             item.current.addEventListener('dblclick', e => {
                 e.preventDefault()
-                // window.location.assign(`/blogs/view.html?id=${blog._id}`)
-                console.log('new page')
+                window.location.assign(`/blogs/${blog._id}`)
             })
         }
-    }, [])
+
+        if (image.current && image.current !== null) {
+            image.current.onerror = () => {
+                image.current.src = default_image
+            }
+        }
+    }, [blog._id])
 
     return (
         <>
             <li ref={item}>
-                <img alt="title" src={blog.image} />
+                <img alt="title" src={blog.image} ref={image} />
                 <div className="body">
-                    <Link>
+                    <Link to={'/blogs/' + blog._id}>
                         <h2>{blog.title}</h2>
                     </Link>
                     <p dangerouslySetInnerHTML={{ __html: blog.content }}></p>
-                    <Link>
+                    <Link to={'/blogs/' + blog._id}>
                         <u className="more">Read More</u>
                     </Link>
                 </div>
