@@ -1,6 +1,8 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const Header = () => {
+    const location = useLocation()
+
     return (
         <>
             <header>
@@ -24,9 +26,19 @@ const Header = () => {
                     <NavLink to="/contact">
                         <li>Contact</li>
                     </NavLink>
-                    <NavLink to="/login">
-                        <li>Sign in</li>
-                    </NavLink>
+                    {
+                        location.pathname !== '/login'
+                            ? (
+                                <NavLink to="/login">
+                                    <li>login</li>
+                                </NavLink>
+                            )
+                            : (
+                                <NavLink to="/signup">
+                                    <li>signup</li>
+                                </NavLink>
+                            )
+                    }
                 </ul>
                 <script type="module" defer src="/js/munubar.js"></script>
             </header>
