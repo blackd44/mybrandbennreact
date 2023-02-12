@@ -9,6 +9,7 @@ import OneBlog from './pages/blogs/oneblog';
 import Contact from './pages/contact';
 import Login from './pages/sign/login';
 import Signup from './pages/sign/signup';
+import Dashboard from './pages/dashboard';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path='/login' element={<Login />}></Route>
           <Route path='/signup' element={<Signup />}></Route>
         </Route>
+        <Route path='/dashboard/*' element={<Dashboard />}></Route>
       </Routes>
     </>
   );
