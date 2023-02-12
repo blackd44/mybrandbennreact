@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import BlogCard from "../components/blogCard";
-let server = 'http://localhost:4444'
+import BlogCard from "../../components/blogCard";
+let server = process.env.REACT_APP_SERVER_URL
 
 const Blogs = () => {
 
@@ -12,8 +12,10 @@ const Blogs = () => {
             .get(server + '/api/blogs')
             .then(res => {
                 if (res.status !== 204) {
-                    if (res.status === 200)
-                        setBlogs(prev => res.data)
+                    if (res.status === 200) {
+                        let data = res.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                        setBlogs(prev => data)
+                    }
                     else
                         console.log(res.data)
                 }
