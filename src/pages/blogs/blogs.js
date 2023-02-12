@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import BlogCard from "../../components/blogCard";
-let server = 'http://localhost:4444'
+let server = process.env.REACT_APP_SERVER_URL
 
 const Blogs = () => {
 

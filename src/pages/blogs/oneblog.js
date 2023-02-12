@@ -1,16 +1,28 @@
 import axios from "axios";
 import moment from "moment/moment";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 
-let server = 'http://localhost:4444'
-const default_profile = "https://www.apesa-france.com/wp-content/uploads/2016/07/profil-homme-2-367x367.png"
+let server = process.env.REACT_APP_SERVER_URL
+const default_profile = process.env.REACT_APP_DEFAULT_PROFILE
 
 const Comment = ({ comment }) => {
+
+    let profileRef = useRef()
+
+    useEffect(() => {
+        if (!profileRef.current)
+            return
+
+        profileRef.current.onerror = () => {
+            profileRef.current.src = default_profile
+        }
+    }, [])
+
     return (
         <>
             <li>
-                <img className="profile-image" src={comment?.owner?.profile || default_profile} alt={comment?.owner?.username} />
+                <img className="profile-image" ref={profileRef} src={comment?.owner?.profile || default_profile} alt={comment?.owner?.username} />
                 <aside>
                     <div>
                         <b>@{comment?.owner?.username}</b>
