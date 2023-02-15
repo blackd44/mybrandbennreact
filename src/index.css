@@ -644,8 +644,8 @@ ul.bloglist li {
   flex: 1 1;
   height: 14rem;
   width: 33%;
+  min-width: 300px;
   border-radius: 5px;
-  contain: content;
   filter: grayscale(1);
   mix-blend-mode: luminosity;
   contain: content;
