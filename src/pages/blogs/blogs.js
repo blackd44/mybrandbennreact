@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import BlogCard from "../../components/blogCard";
+import InlineDots from "../../components/loaders/inlinedots/inlinedots";
+
 let server = process.env.REACT_APP_SERVER_URL
 
 const Blogs = () => {
@@ -22,6 +24,7 @@ const Blogs = () => {
             })
             .catch(e => console.log(e))
     }, [])
+
 
     return (
         <>
@@ -45,9 +48,15 @@ const Blogs = () => {
                             </form>
                             <ul className="bloglist">
                                 {
-                                    blogs.map(blog => (
-                                        <BlogCard key={blog._id} blog={blog} ></BlogCard>
-                                    ))
+                                    blogs.length === 0 ? (
+                                        <>
+                                            <InlineDots />
+                                        </>
+                                    ) : (
+                                        blogs.map(blog => (
+                                            <BlogCard key={blog._id} blog={blog} ></BlogCard>
+                                        ))
+                                    )
                                 }
                             </ul>
                         </div>
