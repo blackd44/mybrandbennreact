@@ -91,7 +91,7 @@ const Header = () => {
                                     <article>
                                         <Link to="/dashboard/profile">profile</Link>
                                         <Link to="/dashboard/">dashboard</Link>
-                                        <Link to="/blogs/add">add blog</Link>
+                                        <Link to="/dashboard/blogs/add">add blog</Link>
                                     </article>
                                     <article>
                                         <Link ref={signout} to='/' style={{ color: 'rgb(255, 0, 0)' }}>signout</Link>
