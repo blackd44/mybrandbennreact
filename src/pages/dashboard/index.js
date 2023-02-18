@@ -5,6 +5,7 @@ import Footer from "../../components/footer";
 import DashMessages from "./messages";
 import Cookie from 'js-cookie'
 import axios from "axios";
+import AddBlog from "./blogs/add";
 
 const default_profile = process.env.REACT_APP_DEFAULT_PROFILE
 const server = process.env.REACT_APP_SERVER_URL
@@ -79,6 +80,7 @@ const Dashboard = () => {
                             <Route path="/" element={<DashBlogs />}></Route>
                             {/* <Route path="/blogs" action={navigate('/dashboard/')}></Route> */}
                             <Route path="/messages" element={<DashMessages />}></Route>
+                            <Route path="/blogs/add" element={<AddBlog user={user} />}></Route>
                             <Route path="*" element={
                                 <div>
                                     <h2>404</h2>

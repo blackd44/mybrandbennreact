@@ -1063,7 +1063,7 @@ img.image {
   position: sticky;
   top: 5vh;
   max-height: 95vh;
-  height: calc(100% - 5vh);
+  /* height: calc(100% - 5vh); */
   overflow-y: auto;
 }
 
