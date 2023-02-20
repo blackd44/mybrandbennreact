@@ -1,11 +1,13 @@
 import axios from "axios";
-import { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { useCallback, useContext, useEffect, useRef } from "react";
+import { UserContext } from "../../components/context/userContext";
+import { Link, useNavigate } from "react-router-dom";
 import Cookie from "js-cookie";
 
 const server = process.env.REACT_APP_SERVER_URL
 
 const Login = () => {
+    const navigate = useNavigate()
 
     const formRef = useRef()
     const emailRef = useRef()
@@ -13,19 +15,9 @@ const Login = () => {
     const submitRef = useRef()
     const infoRef = useRef()
 
-    useEffect(() => {
-        let form = formRef.current
-        if (!form || form === null)
-            return
+    const { setUser} = useContext(UserContext)
 
-        form.addEventListener('submit', submit)
-
-        return () => {
-            form.removeEventListener('submit', submit)
-        }
-    }, [])
-
-    const submit = (e) => {
+    const submit = useCallback((e) => {
         submitRef.current.disabled = true
         e.preventDefault()
         let user = {
@@ -44,7 +36,22 @@ const Login = () => {
                 if (res.status !== 204) {
                     if (res.status === 200) {
                         Cookie.set('token', res.data.token, { expires: 7 })
-                        window.location.assign('/')
+                        axios
+                            .get(server + '/api/users/user', {
+                                headers: {
+                                    Authorization: 'Bearer ' + res.data.token
+                                }
+                            })
+                            .then(res => {
+                                if (res.status !== 204) {
+                                    if (res.status === 200) {
+                                        setUser(prev => res.data)
+                                    }
+                                    else
+                                        console.log(res.data)
+                                }
+                            }).catch(e => console.log(e))
+                        navigate('/')
                     }
                     else
                         console.log(res)
@@ -58,7 +65,19 @@ const Login = () => {
             })
 
         submitRef.current.disabled = false
-    }
+    }, [setUser, navigate])
+
+    useEffect(() => {
+        let form = formRef.current
+        if (!form || form === null)
+            return
+
+        form.addEventListener('submit', submit)
+
+        return () => {
+            form.removeEventListener('submit', submit)
+        }
+    }, [submit])
 
     return (
         <>
