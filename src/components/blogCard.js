@@ -1,9 +1,10 @@
 import { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const default_image = process.env.REACT_APP_DEFAULT_IMAGE
 
 const BlogCard = ({ blog, ...props }) => {
+    const navigate = useNavigate()
 
     const item = useRef()
     const image = useRef()
@@ -12,7 +13,7 @@ const BlogCard = ({ blog, ...props }) => {
         if (item && item.current) {
             item.current.addEventListener('dblclick', e => {
                 e.preventDefault()
-                window.location.assign(`/blogs/${blog._id}`)
+                navigate(`/blogs/${blog._id}`)
             })
         }
 

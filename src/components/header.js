@@ -14,7 +14,6 @@ const Header = () => {
         Cookie.set('token', undefined, { expires: -1 })
         setUser(null)
         setToken(undefined)
-        console.log(e)
     }, [setUser, setToken])
 
     useEffect(() => {

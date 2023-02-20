@@ -17,7 +17,6 @@ const Dashboard = () => {
     useEffect(() => {
         let token = Cookie.get('token')
         if (!token || token === null) {
-            console.log('hello')
             navigate('/')
             return
         }
