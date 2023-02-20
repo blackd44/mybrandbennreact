@@ -6,6 +6,7 @@ import DashMessages from "./messages";
 import AddBlog from "./blogs/add";
 import Cookie from "js-cookie";
 import { UserContext } from "../../components/context/userContext";
+import Profile from "./profile";
 const default_profile = process.env.REACT_APP_DEFAULT_PROFILE
 
 const Dashboard = () => {
@@ -63,6 +64,7 @@ const Dashboard = () => {
                             {/* <Route path="/blogs" action={navigate('/dashboard/')}></Route> */}
                             <Route path="/messages" element={<DashMessages />}></Route>
                             <Route path="/blogs/add" element={<AddBlog user={user} />}></Route>
+                            <Route path="/profile" element={<Profile/>}></Route>
                             <Route path="*" element={
                                 <div>
                                     <h2>404</h2>

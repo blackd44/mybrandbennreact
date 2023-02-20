@@ -3,10 +3,12 @@ import Cookie from "js-cookie";
 import { useCallback, useContext, useEffect, useRef} from "react";
 import { UserContext } from "./context/userContext";
 
+const default_profile = process.env.REACT_APP_DEFAULT_PROFILE
+
 const Header = () => {
     const location = useLocation()
 
-    const {user, setUser, setToken} = useContext(UserContext)
+    const {user, setUser, token, setToken} = useContext(UserContext)
 
     let signout = useRef()
 
@@ -56,11 +58,11 @@ const Header = () => {
                         <li>Contact</li>
                     </NavLink>
                     {
-                        user !== null ? (
+                        token || token !== null ? (
                             <div>
                                 <li className="profile">
                                     <div className="profile">
-                                        <img alt={user.username} src={user.profile} />
+                                        <img alt={user?.username || 'user'} src={user?.profile || default_profile} />
                                     </div>
                                 </li>
                                 <div className="submenu">

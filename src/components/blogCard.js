@@ -22,7 +22,7 @@ const BlogCard = ({ blog, ...props }) => {
                 image.current.src = default_image
             }
         }
-    }, [blog._id])
+    }, [blog._id, navigate])
 
     return (
         <>
