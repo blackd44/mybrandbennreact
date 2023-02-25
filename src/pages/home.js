@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 const Home = () => {
+    const navigate = useNavigate()
     return (
         <>
             <div className="back"></div>
@@ -15,7 +18,7 @@ const Home = () => {
                 </p>
                 <div>
                     <button className="button but1">Hire Me</button>
-                    <button className="button but2" onClick={() => window.location.assign('/portfolio.html')}>Portfolia</button>
+                    <button className="button but2" onClick={() => navigate('/portfolio.html')}>Portfolia</button>
                 </div>
             </main>
         </>
