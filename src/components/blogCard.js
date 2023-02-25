@@ -38,7 +38,7 @@ const BlogCard = ({ blog, ...props }) => {
           <Link className="more" to={"/blogs/" + blog._id}>
             Read More{" "}
             <svg
-              class="w-4 h-4 ml-2"
+              className="w-4 h-4 ml-2"
               viewBox="0 0 24 24"
               stroke="currentColor"
               strokeWidth="2"
