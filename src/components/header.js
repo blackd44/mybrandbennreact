@@ -15,7 +15,7 @@ const Header = () => {
     const logout = useCallback(function (e) {
         Cookie.set('token', undefined, { expires: -1 })
         setUser(null)
-        setToken(undefined)
+        setToken(null)
     }, [setUser, setToken])
 
     useEffect(() => {
@@ -58,7 +58,7 @@ const Header = () => {
                         <li>Contact</li>
                     </NavLink>
                     {
-                        token || token !== null ? (
+                        token && token !== null ? (
                             <div>
                                 <li className="profile">
                                     <div className="profile">

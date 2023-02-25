@@ -1,17 +1,17 @@
 .ldsDualRing {
     display: inline-block;
-    width: 80px;
+    /* width: 80px; */
     height: 80px;
     margin-inline: auto;
 }
 
 .ldsDualRing:after {
-    --color: var(--active-color);
+    --color: var(--dark-color);
     content: " ";
     display: block;
-    width: 64px;
-    height: 64px;
-    margin: 8px;
+    height: calc(100% - 100%/4);
+    aspect-ratio: 1/1;
+    max-height: 100%;
     border-radius: 50%;
     border: 6px solid #fff;
     border-color: var(--color) transparent var(--color) transparent;

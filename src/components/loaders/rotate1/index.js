@@ -1,9 +1,14 @@
+import { useState } from 'react';
 import style from './style.module.css'
 
-const Rotate1 = () => {
+const Rotate1 = ({height}) => {
+    
+    const [css] = useState({
+        height: height ? height : ''
+    })
     return (
         <>
-            <div className={style.ldsDualRing}></div>
+            <div className={style.ldsDualRing} style={css}></div>
         </>
     );
 }
