@@ -1,15 +1,14 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
 import Cookie from "js-cookie";
-import { useCallback, useEffect, useRef, useState } from "react";
-import axios from "axios";
+import { useCallback, useContext, useEffect, useRef} from "react";
+import { UserContext } from "./context/userContext";
 
-const server = process.env.REACT_APP_SERVER_URL
+const default_profile = process.env.REACT_APP_DEFAULT_PROFILE
 
 const Header = () => {
     const location = useLocation()
 
-    const [user, setUser] = useState(null)
-    const [token, setToken] = useState(Cookie.get('token'))
+    const {user, setUser, token, setToken} = useContext(UserContext)
 
     let signout = useRef()
 
@@ -17,8 +16,7 @@ const Header = () => {
         Cookie.set('token', undefined, { expires: -1 })
         setUser(null)
         setToken(undefined)
-        console.log(e)
-    }, [])
+    }, [setUser, setToken])
 
     useEffect(() => {
         let sign = signout.current
@@ -32,26 +30,6 @@ const Header = () => {
             }
         }
     }, [logout, user])
-
-    useEffect(() => {
-        if (!token || token === null)
-            return
-        axios
-            .get(server + '/api/users/user', {
-                headers: {
-                    Authorization: 'Bearer ' + token
-                }
-            })
-            .then(res => {
-                if (res.status !== 204) {
-                    if (res.status === 200) {
-                        setUser(prev => res.data)
-                    }
-                    else
-                        console.log(res.data)
-                }
-            }).catch(e => console.log(e))
-    }, [token])
 
     // useEffect(() => {
     //     console.log(user)
@@ -80,11 +58,11 @@ const Header = () => {
                         <li>Contact</li>
                     </NavLink>
                     {
-                        user !== null ? (
+                        token || token !== null ? (
                             <div>
                                 <li className="profile">
                                     <div className="profile">
-                                        <img alt={user.username} src={user.profile} />
+                                        <img alt={user?.username || 'user'} src={user?.profile || default_profile} />
                                     </div>
                                 </li>
                                 <div className="submenu">

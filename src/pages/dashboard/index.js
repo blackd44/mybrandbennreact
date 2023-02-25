@@ -1,43 +1,26 @@
 import { NavLink, Route, Routes, useNavigate } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useContext } from "react";
 import DashBlogs from "./blogs";
 import Footer from "../../components/footer";
 import DashMessages from "./messages";
-import Cookie from 'js-cookie'
-import axios from "axios";
 import AddBlog from "./blogs/add";
-
+import Cookie from "js-cookie";
+import { UserContext } from "../../components/context/userContext";
+import Profile from "./profile";
 const default_profile = process.env.REACT_APP_DEFAULT_PROFILE
-const server = process.env.REACT_APP_SERVER_URL
 
 const Dashboard = () => {
     let navigate = useNavigate()
 
-    const [user, setUser] = useState(null)
-    const [token] = useState(Cookie.get('token'))
+    const {user, token} = useContext(UserContext)
     const profileRef = useRef()
 
     useEffect(() => {
+        let token = Cookie.get('token')
         if (!token || token === null) {
-            console.log('hello')
             navigate('/')
             return
         }
-        axios
-            .get(server + '/api/users/user', {
-                headers: {
-                    Authorization: 'Bearer ' + token
-                }
-            })
-            .then(res => {
-                if (res.status !== 204) {
-                    if (res.status === 200) {
-                        setUser(prev => res.data)
-                    }
-                    else
-                        console.log(res.data)
-                }
-            }).catch(e => console.log(e))
     }, [token, navigate])
 
     useEffect(() => {
@@ -81,6 +64,7 @@ const Dashboard = () => {
                             {/* <Route path="/blogs" action={navigate('/dashboard/')}></Route> */}
                             <Route path="/messages" element={<DashMessages />}></Route>
                             <Route path="/blogs/add" element={<AddBlog user={user} />}></Route>
+                            <Route path="/profile" element={<Profile/>}></Route>
                             <Route path="*" element={
                                 <div>
                                     <h2>404</h2>
